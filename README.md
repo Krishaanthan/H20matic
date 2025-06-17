@@ -1,5 +1,4 @@
 # H20matic
-# Automatic Plant Watering System using Arduino
 
 This project is a smart plant watering system built using Arduino Uno. It continuously monitors soil moisture and temperature levels and automatically activates a water pump when the soil is dry. An OLED display shows real-time readings of moisture percentage and temperature.
 
@@ -25,6 +24,12 @@ This project is a smart plant watering system built using Arduino Uno. It contin
 ## Final Product
 
 ![Product Image](images/product.jpg)
+
+## Circuit Diagram
+
+![Circuit Diagram](images/circuit_diagram.png)
+
+> Make sure to connect all components according to the circuit diagram for correct operation. Double-check power and ground connections before uploading code.
 
 ## Working Principle
 
