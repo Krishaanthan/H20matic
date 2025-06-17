@@ -23,7 +23,7 @@ This project is a smart plant watering system built using Arduino Uno. It contin
 
 ## Final Product
 
-![Product Image](images/product.jpg)
+![Product Image](circuit_diagram.jpg)
 
 ## Circuit Diagram
 
