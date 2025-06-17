@@ -1,0 +1,60 @@
+#include <Wire.h>
+#include <Adafruit_GFX.h>
+#include <Adafruit_SH110X.h>
+#include <DHT.h>
+
+// OLED Display
+#define SCREEN_WIDTH 128
+#define SCREEN_HEIGHT 64
+Adafruit_SH1106G display(SCREEN_WIDTH, SCREEN_HEIGHT, &Wire, -1);
+
+// Moisture Sensor
+#define MOISTURE_PIN A0
+
+// DHT11 Sensor
+#define DHTPIN 2
+#define DHTTYPE DHT11
+DHT dht(DHTPIN, DHTTYPE);
+
+// Relay & Water Pump
+#define RELAY_PIN 7
+
+void setup() {
+    pinMode(RELAY_PIN, OUTPUT);
+    digitalWrite(RELAY_PIN, HIGH); // Ensure pump is off initially
+    dht.begin();
+    display.begin(0x3C, true);
+    display.clearDisplay();
+}
+
+void loop() {
+    int moistureValue = analogRead(MOISTURE_PIN);
+    int moisturePercent = map(moistureValue, 1023, 300, 0, 100);
+    float temp = dht.readTemperature();
+
+    // Display Data on OLED
+    display.clearDisplay();
+    display.setTextSize(1);
+    display.setTextColor(SH110X_WHITE);
+    display.setCursor(10, 10);
+    display.print("Moisture: ");
+    display.print(moisturePercent);
+    display.print("%");
+    display.setCursor(10, 30);
+    display.print("Temp: ");
+    display.print(temp);
+    display.print("C");
+    display.display();
+
+    // Watering Logic (Pump runs for max 7 seconds)
+    if (moisturePercent < 80) {
+        digitalWrite(RELAY_PIN, LOW); // Turn on pump
+        delay(3000);  // Keep pump on for 7 seconds
+        digitalWrite(RELAY_PIN, HIGH); // Turn off pump
+        delay(3000);
+    } else {
+        digitalWrite(RELAY_PIN, HIGH); // Ensure pump stays off
+    }
+
+    // Short delay before next reading
+}
