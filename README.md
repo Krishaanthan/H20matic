@@ -1,48 +1,116 @@
-# H20matic
+#  H20Matic Plant Watering System
 
-This project is a smart plant watering system built using Arduino Uno. It continuously monitors soil moisture and temperature levels and automatically activates a water pump when the soil is dry. An OLED display shows real-time readings of moisture percentage and temperature.
+An Arduino-based smart irrigation system that monitors soil moisture in real time and waters your plants automatically — no manual checking, no guesswork.
+
+![Prototype](assets/prototype.jpg)
+
+## Overview
+
+Indoor plants suffer most from inconsistent watering — not lack of care, but lack of time. This project solves that with a closed-loop system: a capacitive soil moisture sensor continuously reads the soil, and when moisture drops below a set threshold, a relay-controlled mini water pump activates automatically. A DHT11 sensor adds ambient temperature and humidity context, and a 1.3" OLED display shows live readings so you can check plant status at a glance.
+
+Built as a Design Thinking & Innovation project, this system prioritizes simplicity, low cost, and non-blocking real-time operation over unnecessary complexity.
 
 ## Features
 
-- Monitors soil moisture using a capacitive sensor
-- Measures ambient temperature using a DHT11 sensor
-- Automatically waters the plant when moisture is below 80%
-- Displays moisture and temperature data on a 1.3" SH1106 OLED screen
-- Relay-controlled pump for efficient water usage
+- 🌡️ **Real-time soil moisture monitoring** via capacitive sensor
+- 💧 **Automatic pump control** through a relay module — no manual triggering
+- 🌡️ **Temperature & humidity tracking** with a DHT11 sensor
+- 📟 **Live OLED display** of moisture %, temperature, and pump status
+- 🚱 **Overflow protection** — pump stops when the reservoir is full or moisture is sufficient
+- ⚡ **Non-blocking code** using `millis()` instead of `delay()` for smooth, responsive operation
 
-## Components Used
+## How It Works
 
-- Arduino Uno R3  
-- Capacitive Soil Moisture Sensor (Analog)  
-- DHT11 Temperature & Humidity Sensor  
-- 1.3" OLED Display (SH1106)  
-- Mini DC Submersible Water Pump  
-- 5V 2-Channel Relay Module  
-- Jumper Wires, Breadboard  
-- Wires for water level detection
+```
+Soil Moisture Sensor ─┐
+DHT11 Sensor          ├──► Arduino Uno ──► Relay Module ──► Water Pump
+Water Level Wires     ─┘         │
+                                  └──► OLED Display (live readings)
+```
 
-## Final Product
+1. The Arduino continuously reads soil moisture, temperature, and water level.
+2. If soil moisture falls below the threshold **and** the reservoir isn't empty, the pump turns on.
+3. Watering stops once moisture is restored or the water level runs low.
+4. All readings are pushed to the OLED display in real time.
 
-![Product Image](product.jpg)
+## Hardware
+
+| Component | Purpose |
+|---|---|
+| Arduino Uno R3 | Central microcontroller |
+| Capacitive Soil Moisture Sensor | Detects soil dryness (corrosion-resistant) |
+| DHT11 Sensor | Ambient temperature & humidity |
+| 1.3" OLED Display (SH1106) | Real-time data visualization |
+| Mini Water Pump (DC 4–12V) | Delivers water to the plant |
+| 5V 2-Channel Relay Module | Switches pump power |
+| Water level sensing wires | Prevents overflow / dry-run |
+
+## Software & Libraries
+
+- [Arduino IDE](https://www.arduino.cc/en/software)
+- Adafruit GFX Library
+- SH1106 OLED Library
+- DHT11 Library
 
 ## Circuit Diagram
 
-![Circuit Diagram](circuit_diagram.jpg)
+![Circuit Diagram](assets/circuit-diagram.png)
 
-> Make sure to connect all components according to the circuit diagram for correct operation. Double-check power and ground connections before uploading code.
+## Getting Started
 
-## Working Principle
+### 1. Wire the components
+Follow the circuit diagram above — soil sensor to an analog pin, relay to a digital pin controlling the pump, DHT11 and OLED on their respective data lines.
 
-The system reads the soil moisture level through the analog sensor and checks the ambient temperature using the DHT11 sensor. If the moisture level is below 80%, it triggers the relay module to power the water pump for a fixed duration (7 seconds). All data is updated and shown in real time on the OLED display.
+### 2. Install dependencies
+In Arduino IDE, install via Library Manager:
+- `Adafruit GFX Library`
+- `SH1106 Library`
+- `DHT sensor library`
 
-## How to Use
+### 3. Upload the code
+Open `plant_watering_system.ino`, select your board (Arduino Uno) and port, then upload.
 
-1. Connect all components as per the circuit diagram.
-2. Upload the Arduino code using the Arduino IDE.
-3. Power the Arduino using a USB cable or a suitable power adapter.
-4. The system will automatically start monitoring and watering the plant when required.
+### 4. Set your threshold
+Adjust the moisture threshold constant in the code to match your plant's needs (default: 80%).
+
+## Project Structure
+
+```
+automatic-plant-watering-system/
+├── README.md
+├── LICENSE
+├── src/
+│   └── plant_watering_system.ino
+├── docs/
+│   └── Automatic_Plant_Watering_System_Report.pdf
+├── assets/
+│   ├── prototype.jpg
+│   ├── block-diagram.png
+│   ├── architecture-diagram.png
+│   ├── flow-diagram.png
+│   └── circuit-diagram.png
+└── .gitignore
+```
+
+## Applications
+
+- Home & indoor gardening
+- Small-scale urban farming
+- Offices and community green spaces
+- Educational demos for IoT / embedded systems
+
+## Future Enhancements
+
+- Wi-Fi connectivity (ESP32) for remote monitoring via mobile app
+- Light intensity sensing for shade/sun-loving plants
+- Weather-API integration to skip watering on rainy days
+- Predictive watering using historical soil data
+
+## Author
+
+**Krishaanthan V**
+B.E. Computer Science and Engineering, Sathyabama Institute of Science and Technology
 
 ## License
 
-This project is open-source and available under the MIT License.
-
+This project is open-sourced under the [MIT License](LICENSE).
