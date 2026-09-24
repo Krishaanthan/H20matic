@@ -54,7 +54,7 @@ Water Level Wires     ─┘         │
 
 ## Circuit Diagram
 
-![Circuit Diagram](assets/circuit-diagram.png)
+![Circuit Diagram](assets/circuit-diagram.jpg)
 
 ## Getting Started
 
