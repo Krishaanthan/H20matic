@@ -2,7 +2,12 @@
 
 An Arduino-based smart irrigation system that monitors soil moisture in real time and waters your plants automatically — no manual checking, no guesswork.
 
-![Prototype](assets/prototype.jpg)
+
+<p align="center">
+  <img src="assets/prototype.jpg" alt="System Architecture" width="500"><br>
+  <em>Prototype</em>
+</p>
+
 
 ## Overview
 
